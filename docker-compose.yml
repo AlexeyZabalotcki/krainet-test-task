@@ -1,0 +1,28 @@
+version: '3.5'
+
+services:
+
+  krainet-service:
+    image: krainet-service:latest
+    container_name: krainet-service
+    depends_on:
+      database:
+        condition: service_started
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/cv_db
+      SPRING_DATASOURCE_USERNAME: cv
+      SPRING_DATASOURCE_PASSWORD: password
+
+  database:
+    container_name: database
+    image: postgres
+    environment:
+      POSTGRES_USER: cv
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: cv_db
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
