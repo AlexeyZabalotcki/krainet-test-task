@@ -3,6 +3,8 @@ package by.krainet.krainet.test.task.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Setter
 @Getter
@@ -21,4 +23,6 @@ public class Direction {
     private String title;
     private String description;
 
+    @ManyToMany(mappedBy = "possibleDirections")
+    private List<Candidate> candidates;
 }

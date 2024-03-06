@@ -1,14 +1,12 @@
 package by.krainet.krainet.test.task.service;
 
+import by.krainet.krainet.test.task.dto.Params;
 import by.krainet.krainet.test.task.dto.TestDto;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
-import java.util.Map;
 
 public interface TestService {
 
-    Page<TestDto> getAll(Map<String, String> filters, Pageable pageable);
+    Page<TestDto> getAll(Params params);
 
     TestDto create(TestDto test);
 

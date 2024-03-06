@@ -12,11 +12,11 @@ public interface CandidateTestMapper {
 
     CandidateTestMapper INSTANCE = Mappers.getMapper(CandidateTestMapper.class);
 
-    CandidateTestDto candidateTestToCandidateTestDTO(CandidateTest candidateTest);
+    CandidateTestDto candidateTestToCandidateTestDto(CandidateTest candidateTest);
 
-    CandidateTest candidateTestDTOToCandidateTest(CandidateTestDto candidateTestDTO);
+    CandidateTest candidateTestDtoToCandidateTest(CandidateTestDto candidateTestDTO);
 
-    List<CandidateTestDto> candidateTestsToCandidateTestDTOs(List<CandidateTest> candidateTests);
+    List<CandidateTestDto> candidateTestsToCandidateTestDtos(List<CandidateTest> candidateTests);
 
-    List<CandidateTest> candidateTestDTOsToCandidateTests(List<CandidateTestDto> candidateTestDTOs);
+    List<CandidateTest> candidateTestDtosToCandidateTests(List<CandidateTestDto> candidateTestDTOs);
 }

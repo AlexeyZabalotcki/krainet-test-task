@@ -12,11 +12,11 @@ public interface TestMapper {
 
     TestMapper INSTANCE = Mappers.getMapper(TestMapper.class);
 
-    TestDto testToTestDTO(Test test);
+    TestDto testToTestDto(Test test);
 
-    Test testDTOToTest(TestDto testDTO);
+    Test testDtoToTest(TestDto testDTO);
 
-    List<TestDto> testsToTestDTOs(List<Test> tests);
+    List<TestDto> testsToTestDtos(List<Test> tests);
 
-    List<Test> testDTOsToTests(List<TestDto> testDTOs);
+    List<Test> testDtosToTests(List<TestDto> testDTOs);
 }

@@ -4,21 +4,22 @@ import by.krainet.krainet.test.task.dao.CandidateRepository;
 import by.krainet.krainet.test.task.dao.CandidateTestRepository;
 import by.krainet.krainet.test.task.dao.TestRepository;
 import by.krainet.krainet.test.task.dto.CandidateTestDto;
+import by.krainet.krainet.test.task.dto.Params;
 import by.krainet.krainet.test.task.mapper.CandidateTestMapper;
 import by.krainet.krainet.test.task.model.Candidate;
 import by.krainet.krainet.test.task.model.CandidateTest;
+import by.krainet.krainet.test.task.model.Direction;
 import by.krainet.krainet.test.task.model.Test;
 import by.krainet.krainet.test.task.service.CandidateTestService;
 import by.krainet.krainet.test.task.util.GenericSpecification;
-import by.krainet.krainet.test.task.util.SearchCriteria;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.Map;
 
 @Slf4j
 @Service
@@ -32,22 +33,25 @@ public class CandidateTestServiceImpl implements CandidateTestService {
     private final CandidateTestMapper mapper;
 
     @Override
-    public Page<CandidateTestDto> getAll(Map<String, String> filters, Pageable pageable) {
-        GenericSpecification<CandidateTest> spec = new GenericSpecification<>();
+    public Page<CandidateTestDto> getAll(Params params) {
+        log.info("Service input params: {}", params);
+        GenericSpecification<CandidateTest> spec = new GenericSpecification<>(params.filter());
 
-        filters.forEach((key, value) -> {
-            spec.add(new SearchCriteria(key, ":", value));
-        });
+        log.info("GenericSpecification {}", spec);
+
+        String[] sortParams = params.sort().split(",");
+        Sort sort = Sort.by(Sort.Direction.fromString(sortParams[1]), sortParams[0]);
+        Pageable pageable = PageRequest.of(params.page(), params.size(), sort);
 
         return repository.findAll(spec, pageable)
-                .map(mapper::candidateTestToCandidateTestDTO);
+                .map(mapper::candidateTestToCandidateTestDto);
     }
 
     @Override
     public CandidateTestDto create(CandidateTestDto candidateTest) {
-        CandidateTest toSave = mapper.candidateTestDTOToCandidateTest(candidateTest);
+        CandidateTest toSave = mapper.candidateTestDtoToCandidateTest(candidateTest);
         CandidateTest saved = repository.save(toSave);
-        return mapper.candidateTestToCandidateTestDTO(saved);
+        return mapper.candidateTestToCandidateTestDto(saved);
     }
 
     @Override
@@ -66,9 +70,9 @@ public class CandidateTestServiceImpl implements CandidateTestService {
             existingCandidateTest.setTest(test);
         }
 
-        CandidateTest saved = repository.save(existingCandidateTest);
+        CandidateTest updated = repository.save(existingCandidateTest);
 
-        return mapper.candidateTestToCandidateTestDTO(saved);
+        return mapper.candidateTestToCandidateTestDto(updated);
 
     }
 }

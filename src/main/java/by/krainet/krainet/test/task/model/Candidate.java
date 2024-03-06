@@ -23,8 +23,12 @@ public class Candidate {
     private String lastName;
     private String firstName;
     private String middleName;
+
+    @Lob
     private byte[] photo;
     private String description;
+
+    @Lob
     private byte[] cvFile;
 
     @ManyToMany

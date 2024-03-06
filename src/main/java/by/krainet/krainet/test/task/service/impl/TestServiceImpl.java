@@ -1,23 +1,20 @@
 package by.krainet.krainet.test.task.service.impl;
 
 import by.krainet.krainet.test.task.dao.TestRepository;
+import by.krainet.krainet.test.task.dto.Params;
 import by.krainet.krainet.test.task.dto.TestDto;
 import by.krainet.krainet.test.task.mapper.TestMapper;
-import by.krainet.krainet.test.task.model.Candidate;
-import by.krainet.krainet.test.task.model.CandidateTest;
 import by.krainet.krainet.test.task.model.Test;
-import by.krainet.krainet.test.task.model.TestResult;
 import by.krainet.krainet.test.task.service.TestService;
 import by.krainet.krainet.test.task.util.GenericSpecification;
-import by.krainet.krainet.test.task.util.SearchCriteria;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.Map;
 
 @Slf4j
 @Service
@@ -28,22 +25,25 @@ public class TestServiceImpl implements TestService {
     private final TestMapper mapper;
 
     @Override
-    public Page<TestDto> getAll(Map<String, String> filters, Pageable pageable) {
-        GenericSpecification<Test> spec = new GenericSpecification<>();
+    public Page<TestDto> getAll(Params params) {
+        log.info("Service input params: {}", params);
+        GenericSpecification<Test> spec = new GenericSpecification<>(params.filter());
 
-        filters.forEach((key, value) -> {
-            spec.add(new SearchCriteria(key, ":", value));
-        });
+        log.info("GenericSpecification {}", spec);
+
+        String[] sortParams = params.sort().split(",");
+        Sort sort = Sort.by(Sort.Direction.fromString(sortParams[1]), sortParams[0]);
+        Pageable pageable = PageRequest.of(params.page(), params.size(), sort);
 
         return repository.findAll(spec, pageable)
-                .map(mapper::testToTestDTO);
+                .map(mapper::testToTestDto);
     }
 
     @Override
     public TestDto create(TestDto test) {
-        Test toSave = mapper.testDTOToTest(test);
+        Test toSave = mapper.testDtoToTest(test);
         Test saved = repository.save(toSave);
-        return mapper.testToTestDTO(saved);
+        return mapper.testToTestDto(saved);
     }
 
     @Override
@@ -54,6 +54,8 @@ public class TestServiceImpl implements TestService {
         toUpdate.setTitle(test.title());
         toUpdate.setDescription(test.description());
 
-        return mapper.testToTestDTO(toUpdate);
+        Test updated = repository.save(toUpdate);
+
+        return mapper.testToTestDto(updated);
     }
 }
