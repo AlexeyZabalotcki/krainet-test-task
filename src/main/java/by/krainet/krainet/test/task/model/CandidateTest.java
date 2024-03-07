@@ -9,8 +9,8 @@ import java.util.List;
 @Setter
 @Getter
 @Builder
-@ToString
-@Table(name = "candidate_test")
+//@ToString
+@Table(name = "candidate_tests")
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor

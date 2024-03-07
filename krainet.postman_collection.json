@@ -1,0 +1,522 @@
+{
+	"info": {
+		"_postman_id": "09a1684c-6a48-442a-ab7c-4886be092191",
+		"name": "krainet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30224037"
+	},
+	"item": [
+		{
+			"name": "Directions",
+			"item": [
+				{
+					"name": "find all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/directions?page=0&size=10&sort=description,desc&filter=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"directions"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "sort",
+									"value": "description,desc"
+								},
+								{
+									"key": "filter",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"DevOps\",\r\n    \"description\": \"Searching in containers 222\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/directions/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"directions",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Backend\",\r\n    \"description\": \"Backend side\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/directions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"directions"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Candidate",
+			"item": [
+				{
+					"name": "find all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/candidates?page=0&size=10&sort=description,desc&filter=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"candidates"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "sort",
+									"value": "description,desc"
+								},
+								{
+									"key": "filter",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var data = {\r",
+									"    lastName:\"Zabalotsky\",\r",
+									"    firstName:\"Alexey\",\r",
+									"    middleName:\"Sergeevich\",\r",
+									"    description:\"Java dev\",\r",
+									"    possibleDirectionIds:\"1,2\"\r",
+									"}\r",
+									"pm.variables.set(\"jsonData\", JSON.stringify(data))\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/pdf",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"value": "{{jsonData}}",
+									"contentType": "application/json",
+									"type": "text"
+								},
+								{
+									"key": "photo",
+									"contentType": "application/png",
+									"type": "file",
+									"src": "Screenshot 2024-03-06 152311.png"
+								},
+								{
+									"key": "cvFile",
+									"contentType": "application/pdf",
+									"type": "file",
+									"src": "CV-Alexey-Zabalotcki-Java-developer (1).pdf"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/candidates",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"candidates"
+							],
+							"query": [
+								{
+									"key": "data",
+									"value": "{{jsonData}}",
+									"disabled": true
+								},
+								{
+									"key": "cvFile",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "photo",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var data = {\r",
+									"    lastName:\"Ivanov\",\r",
+									"    firstName:\"Ivan\",\r",
+									"    middleName:\"Sergeevich\",\r",
+									"    description:\"Fullstack dev\",\r",
+									"    possibleDirectionIds:\"1,2\"\r",
+									"}\r",
+									"pm.variables.set(\"jsonData\", JSON.stringify(data))"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"value": "{{jsonData}}",
+									"contentType": "application/json",
+									"type": "text"
+								},
+								{
+									"key": "photo",
+									"contentType": "application/png",
+									"type": "file",
+									"src": "Screenshot 2024-03-06 152311.png"
+								},
+								{
+									"key": "cvFile",
+									"contentType": "application/pdf",
+									"type": "file",
+									"src": "CV-Alexey-Zabalotcki-Java-developer (1).pdf"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/candidates/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"candidates",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tests",
+			"item": [
+				{
+					"name": "find all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/tests?page=0&size=10&sort=description,desc&filter=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"tests"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "sort",
+									"value": "description,desc"
+								},
+								{
+									"key": "filter",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"DevOps\",\r\n    \"description\": \"Searching in containers 111\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/tests/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"tests",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Backend test\",\r\n    \"description\": \"Searching in containers 111\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/tests",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"tests"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CandidateTests",
+			"item": [
+				{
+					"name": "find all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/candidate-tests?page=0&size=10&sort=candidateId,desc&filter=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"candidate-tests"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "sort",
+									"value": "candidateId,desc"
+								},
+								{
+									"key": "filter",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"candidateId\": 1,\r\n    \"testId\": 1,\r\n    \"testResults\": [\r\n        {\r\n            \"date\": \"2023-04-05\",\r\n            \"score\": 85.0\r\n        },\r\n        {\r\n            \"date\": \"2023-04-12\",\r\n            \"score\": 90.0\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/candidate-tests",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"candidate-tests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"DevOps\",\r\n    \"description\": \"Searching in containers 111\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/candidate-tests/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"candidate-tests",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

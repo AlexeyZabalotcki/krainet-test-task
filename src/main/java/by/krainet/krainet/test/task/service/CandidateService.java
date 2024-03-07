@@ -16,5 +16,5 @@ public interface CandidateService {
 
     CandidateDto create(CreateCandidateDto candidateDto, MultipartFile photo, MultipartFile cvFile);
 
-    CandidateDto update(Long id, CandidateDto candidate);
+    CandidateDto update(Long id, CreateCandidateDto candidateDto, MultipartFile photo, MultipartFile cvFile);
 }

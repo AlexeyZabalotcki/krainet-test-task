@@ -10,7 +10,7 @@ import java.util.List;
 @Setter
 @Getter
 @Builder
-@ToString
+//@ToString
 @Table(name = "test_results")
 @EqualsAndHashCode
 @NoArgsConstructor
@@ -25,6 +25,6 @@ public class TestResult {
     private Double score;
 
     @ManyToOne
-    @JoinColumn(name = "candidate_test")
+    @JoinColumn(name = "candidate_test_id")
     private CandidateTest candidateTest;
 }

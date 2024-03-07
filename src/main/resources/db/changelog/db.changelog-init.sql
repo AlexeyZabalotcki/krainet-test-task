@@ -55,7 +55,7 @@ CREATE SEQUENCE test_results_seq start 1 increment 1;
 
 CREATE TABLE test_results (
     id SERIAL PRIMARY KEY,
-    candidate_test_id INT NOT NULL,
+    candidate_test_id INT,
     date DATE NOT NULL,
     score DOUBLE PRECISION,
     FOREIGN KEY (candidate_test_id) REFERENCES candidate_tests (id)

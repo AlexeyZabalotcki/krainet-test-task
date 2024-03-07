@@ -6,9 +6,9 @@ import by.krainet.krainet.test.task.dao.TestRepository;
 import by.krainet.krainet.test.task.dto.CandidateTestDto;
 import by.krainet.krainet.test.task.dto.Params;
 import by.krainet.krainet.test.task.mapper.CandidateTestMapper;
+import by.krainet.krainet.test.task.mapper.CandidateTestMapperI;
 import by.krainet.krainet.test.task.model.Candidate;
 import by.krainet.krainet.test.task.model.CandidateTest;
-import by.krainet.krainet.test.task.model.Direction;
 import by.krainet.krainet.test.task.model.Test;
 import by.krainet.krainet.test.task.service.CandidateTestService;
 import by.krainet.krainet.test.task.util.GenericSpecification;
@@ -30,6 +30,7 @@ public class CandidateTestServiceImpl implements CandidateTestService {
     private final CandidateRepository candidateRepository;
     private final TestRepository testRepository;
 
+//    private final CandidateTestMapperI mapper;
     private final CandidateTestMapper mapper;
 
     @Override
@@ -49,8 +50,20 @@ public class CandidateTestServiceImpl implements CandidateTestService {
 
     @Override
     public CandidateTestDto create(CandidateTestDto candidateTest) {
-        CandidateTest toSave = mapper.candidateTestDtoToCandidateTest(candidateTest);
+        Long candidateId = candidateTest.candidateId();
+        Long testId = candidateTest.testId();
+
+        Candidate candidate = candidateRepository.findById(candidateId)
+                .orElseThrow(() -> new EntityNotFoundException("Check candidat id e" + candidateId));
+        Test test = testRepository.findById(testId)
+                .orElseThrow(() -> new EntityNotFoundException("Check test id " + testId));
+
+
+        log.info("CandidateTestDto input {}", candidateTest);
+        CandidateTest toSave = mapper.candidateTestDtoToCandidateTest(candidate, test, candidateTest);
+        log.info("CandidateTest toSave {}", toSave);
         CandidateTest saved = repository.save(toSave);
+        log.info(" CandidateTest saved  {}", saved);
         return mapper.candidateTestToCandidateTestDto(saved);
     }
 

@@ -35,15 +35,22 @@ public class CandidateController {
         return ResponseEntity.ok(service.getAll(params));
     }
 
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<CandidateDto> create(@RequestPart("data") CreateCandidateDto candidateDto,
-                                               @RequestParam("photo") MultipartFile photo,
-                                               @RequestParam("cvFile") MultipartFile cvFile) {
+    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE,
+                             MediaType.APPLICATION_JSON_VALUE,
+                             MediaType.APPLICATION_PDF_VALUE,
+                             MediaType.APPLICATION_OCTET_STREAM_VALUE})
+    public ResponseEntity<CandidateDto> create(@RequestPart(name = "data") CreateCandidateDto candidateDto,
+                                               @RequestParam(name = "photo", required = false) MultipartFile photo,
+                                               @RequestParam(name = "cvFile", required = false) MultipartFile cvFile) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.create(candidateDto, photo, cvFile));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CandidateDto> update(@PathVariable Long id, @RequestBody CandidateDto candidateDto) {
-        return ResponseEntity.ok(service.update(id, candidateDto));
+    public ResponseEntity<CandidateDto> update(@PathVariable Long id,
+                                               @RequestPart("data") CreateCandidateDto candidateDto,
+                                               @RequestParam(name = "photo", required = false) MultipartFile photo,
+                                               @RequestParam(name = "cvFile", required = false) MultipartFile cvFile) {
+        return ResponseEntity.ok(service.update(id, candidateDto, photo, cvFile));
     }
+
 }
