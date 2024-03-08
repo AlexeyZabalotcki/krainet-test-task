@@ -18,6 +18,9 @@ To run the application, execute the following commands:
 
 ### `usage sample:`
 
+### `Swagger endpoint:`
+   * `http://localhost:8080/swagger-ui/index.html#/`
+
 1. Directions 
 
     1.1. Get all directions: GET `http://localhost:8080/api/v1/directions?page=0&size=10&sort=title,asc&filter=`
