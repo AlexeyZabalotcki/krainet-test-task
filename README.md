@@ -57,7 +57,7 @@ To run the application, execute the following commands:
    + add photo and cvFile as files
    
    `*`When using Swagger, this endpoint returns an `HTTP 415 Unsupported Media Type` error.
-      Use Postman to test this endpoint 
+      Use Postman to test this endpoint [krainet.postman_collection.json](krainet.postman_collection.json)
    
    Sample of request ![request sample.png](request%20sample.png)![request sample2.png](request%20sample2.png)
    
