@@ -37,34 +37,97 @@ To run the application, execute the following commands:
     }
     ```
 
-2. As Admin/User you can work with currency information:
+2. Candidates
 
-    2.1. Get all currencies requests for today: GET `http://localhost:8000/client/date/<YYYY-MM-DD>`
+   1.1. Get all candidates: GET `http://localhost:8080/api/v1/candidates?page=0&size=10&sort=description,desc&filter=`
+
+   1.2. Create new candidate: POST `http://localhost:8080/api/v1/candidates`
+    ```json
+   {
+    "lastName":"Ivanov",
+    "firstName":"Ivan",
+    "middleName":"Ivanovich",
+    "description":"Java developer",
+    "possibleDirectionIds":"1,2"
+    }
+   ```
+   + add photo and cvFile as files
+   
+   `*`When using Swagger, this endpoint returns an `HTTP 415 Unsupported Media Type` error.
+      Use Postman to test this endpoint
+   
+   
+   1.3. Update candidate: PUT `http://localhost:8080/api/v1/candidates/1`
     
-    2.2. Get all currencies requests by rate: GET `http://localhost:8000/client/rate/<rate>`
+   ```json
+      {
+       "lastName":"Alexeev",
+       "firstName":"Alexey",
+       "middleName":"Alexeevich",
+       "description":"Java developer",
+       "possibleDirectionIds":"1,2"
+       }
+   ```
+    
+   + add photo and cvFile as files
 
-    2.3. Get all currencies requests by amount: GET `http://localhost:8000/client/between?from=1&to=5`
+   `*`When using Swagger, this endpoint returns an `HTTP 415 Unsupported Media Type` error.
+      Use Postman to test this endpoint
 
-    2.4. Create new request to third-party server: POST `http://localhost:8000/client/new`
+3. Tests
+
+   1.1. Get all tests: GET `http://localhost:8080/api/v1/tests?page=0&size=10&sort=description,desc&filter=`
+
+   1.2. Create new test: POST `http://localhost:8080/api/v1/tests`
+    ```json
+   {
+    "title": "Backend test",
+    "description": "some test"
+    }
+   ```
+   1.3. Update test: PUT `http://localhost:8080/api/v1/tests/1`
     ```json
     {
-    "from": "USD",
-    "to": "BYN",
-    "amount": 10,
-    "subscribe": true
+    "title": "DevOps test",
+    "description": "Searching in containers"
     }
     ```
 
-3. As Admin you can work with currency information:
-    
-    3.1. Get a specific currency by id: GET `http://localhost:8000/client/id/<id>`
+4. Candidate-Tests
 
-    3.2. Get first currency request: GET `http://localhost:8000/client/first`
+   1.1. Get all Candidate-tests: GET `http://localhost:8080/api/v1/candidate-tests?page=0&size=10&sort=candidateId,desc&filter=`
 
-    3.3. Get last currency request: GET `http://localhost:8000/client/last`
-
-    3.4. Delete currency request by their id: DELETE `http://localhost:8000/client/<id>`
-
-### Diagram:
-
-![Diagram.gif](Diagram.gif)
+   1.2. Create new Candidate-test: POST `http://localhost:8080/api/v1/candidate-tests`
+    ```json
+   {
+    "candidateId": 1,
+    "testId": 1,
+    "testResults": [
+        {
+            "date": "2024-01-05",
+            "score": 85.0
+        },
+        {
+            "date": "2023-04-12",
+            "score": 90.0
+        }
+    ]
+    }
+   ```
+   1.3. Update Candidate-test: PUT `http://localhost:8080/api/v1/candidate-tests/1`
+    ```json
+    {
+    "candidateId": 2,
+    "testId": 2,
+    "testResults": [
+        {
+            "date": "2024-01-05",
+            "score": 85.0
+        },
+        {
+            "date": "2023-04-12",
+            "score": 90.0
+        }
+    ]
+    }
+    ```
