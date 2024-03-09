@@ -30,7 +30,6 @@ public class CandidateServiceImpl implements CandidateService {
 
     private final CandidateRepository repository;
     private final DirectionRepository directionRepository;
-//    private final CandidateMapperI mapper;
     private final CandidateMapper mapper;
 
     @Override
@@ -49,6 +48,7 @@ public class CandidateServiceImpl implements CandidateService {
     }
 
     @Override
+    @Transactional
     public CandidateDto create(CreateCandidateDto candidateDto, MultipartFile photo, MultipartFile cvFile) {
         log.info("CreateCandidateDto {}", candidateDto);
         List<Direction> possibleDirections = getPossibleDirections(candidateDto);
@@ -56,36 +56,13 @@ public class CandidateServiceImpl implements CandidateService {
         Candidate candidate = mapper.candidateDtoToCandidate(candidateDto, possibleDirections, photo, cvFile);
         Candidate saved = repository.save(candidate);
 
-//        try {
-//            saved = repository.save(Candidate.builder()
-//                    .lastName(candidateDto.lastName())
-//                    .firstName(candidateDto.firstName())
-//                    .middleName(candidateDto.middleName())
-//                    .description(candidateDto.description())
-//                    .possibleDirections(possibleDirections)
-//                    .photo(ImageUtils.compressImage(photo.getBytes()))
-//                    .cvFile(cvFile.getBytes())
-//                    .build());
-//        } catch (IOException e) {
-//            throw new RuntimeException("Check CV or photo files");
-//        }
-
         log.info("saved {}", saved);
 
-//        List<Long> directionIds = saved.getPossibleDirections().stream().map(Direction::getId).toList();
-
         return mapper.candidateToCandidateDto(saved);
-//        return new CandidateDto(
-//                saved.getLastName(),
-//                saved.getFirstName(),
-//                saved.getMiddleName(),
-//                saved.getPhoto(),
-//                saved.getDescription(),
-//                saved.getCvFile(),
-//                directionIds);
     }
 
     @Override
+    @Transactional
     public CandidateDto update(Long id, CreateCandidateDto candidateDto,  MultipartFile photo, MultipartFile cvFile) {
         Candidate toUpdate = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Candidate not found, Check id " + id));
@@ -93,20 +70,6 @@ public class CandidateServiceImpl implements CandidateService {
 
         List<Direction> possibleDirections = getPossibleDirections(candidateDto);
         Candidate updated = mapper.updateCandidateFields(toUpdate, candidateDto, possibleDirections, photo, cvFile);
-
-//        toUpdate.setFirstName(candidateDto.firstName());
-//        toUpdate.setLastName(candidateDto.lastName());
-//        toUpdate.setMiddleName(candidateDto.middleName());
-//        toUpdate.setDescription(candidateDto.description());
-//        toUpdate.setPossibleDirections(possibleDirections);
-//        try {
-//            toUpdate.setCvFile(ImageUtils.compressImage(cvFile.getBytes()));
-//            toUpdate.setPhoto(ImageUtils.compressImage(photo.getBytes()));
-//        } catch (IOException e) {
-//            throw new RuntimeException("Check CV or photo files");
-//        }
-//
-//        Candidate updated = repository.save(toUpdate);
 
         Candidate saved = repository.save(updated);
         return mapper.candidateToCandidateDto(saved);

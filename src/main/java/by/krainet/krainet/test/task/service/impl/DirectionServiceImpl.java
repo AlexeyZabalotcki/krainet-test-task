@@ -45,6 +45,7 @@ public class DirectionServiceImpl implements DirectionService {
     }
 
     @Override
+    @Transactional
     public DirectionDto create(DirectionDto direction) {
         log.info("DirectionDto {}", direction.toString());
         Direction toSave = mapper.directionDtoToDirection(direction);
@@ -55,6 +56,7 @@ public class DirectionServiceImpl implements DirectionService {
     }
 
     @Override
+    @Transactional
     public DirectionDto update(Long id, DirectionDto direction) {
         log.info("Input params {} {}", id, direction);
         Direction toUpdate = repository.findById(id)

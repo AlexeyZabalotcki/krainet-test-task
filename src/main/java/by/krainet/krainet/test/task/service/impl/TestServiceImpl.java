@@ -40,6 +40,7 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
+    @Transactional
     public TestDto create(TestDto test) {
         Test toSave = mapper.testDtoToTest(test);
         Test saved = repository.save(toSave);
@@ -47,6 +48,7 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
+    @Transactional
     public TestDto update(Long id, TestDto test) {
         Test toUpdate = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Test not found, Check id " + id));

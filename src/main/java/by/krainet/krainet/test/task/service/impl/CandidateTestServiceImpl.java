@@ -30,7 +30,6 @@ public class CandidateTestServiceImpl implements CandidateTestService {
     private final CandidateRepository candidateRepository;
     private final TestRepository testRepository;
 
-//    private final CandidateTestMapperI mapper;
     private final CandidateTestMapper mapper;
 
     @Override
@@ -49,6 +48,7 @@ public class CandidateTestServiceImpl implements CandidateTestService {
     }
 
     @Override
+    @Transactional
     public CandidateTestDto create(CandidateTestDto candidateTest) {
         Long candidateId = candidateTest.candidateId();
         Long testId = candidateTest.testId();
@@ -68,6 +68,7 @@ public class CandidateTestServiceImpl implements CandidateTestService {
     }
 
     @Override
+    @Transactional
     public CandidateTestDto update(Long id, CandidateTestDto candidateTest) {
         CandidateTest existingCandidateTest = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("CandidateTest not found with id: " + id));
