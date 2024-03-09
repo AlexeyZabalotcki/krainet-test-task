@@ -6,7 +6,6 @@ import by.krainet.krainet.test.task.dao.TestRepository;
 import by.krainet.krainet.test.task.dto.CandidateTestDto;
 import by.krainet.krainet.test.task.dto.Params;
 import by.krainet.krainet.test.task.mapper.CandidateTestMapper;
-import by.krainet.krainet.test.task.mapper.CandidateTestMapperI;
 import by.krainet.krainet.test.task.model.Candidate;
 import by.krainet.krainet.test.task.model.CandidateTest;
 import by.krainet.krainet.test.task.model.Test;
@@ -20,6 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
